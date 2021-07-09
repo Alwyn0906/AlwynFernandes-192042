@@ -1,0 +1,30 @@
+---
+- name: alwyn-192042
+  hosts: slave
+  become: true
+  become_user: root
+  
+  tasks:
+    - name: install nginx
+      apt: pkg=nginx  state=present update_cache=true
+        
+    - name: install postgresql
+      apt:
+        name: "postgresql"
+        state: present
+        update_cache: true        
+    
+    - name: Create user
+      user: 
+        name: alwynFernandes
+        password: $5$a7lvOUoPzMJ$2W.UqbSXK3xUXNDyOrr2lt2RxGl3s2ocrHzmw7IJQQ0
+        state: present
+        shell: /bin/bash
+     
+    - name: Creating directory
+      file:
+        path: /home/AlwynFernandes_39
+        state: directory
+    
+    - name: uninstall nano
+      apt: name=nano state=absent 
